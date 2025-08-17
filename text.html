@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Удвойте доход с текущей базой клиентов</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #0ea5e9;
+            --accent: #8b5cf6;
+            --light: #f0f9ff;
+            --dark: #1e293b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            background-color: #f8fafc;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(255,255,255,0.95), rgba(255,255,255,0.95)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%232563eb" opacity="0.05"/><path d="M0 0L100 100M100 0L0 100" stroke="%230ea5e9" stroke-width="1" opacity="0.1"/></svg>');
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: var(--dark);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(to right, var(--accent), var(--primary));
+            color: white;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.6);
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent), var(--primary));
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Problem Section */
+        .problem {
+            background-color: white;
+        }
+
+        .problem-container {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .problem-content {
+            flex: 1;
+        }
+
+        .problem-image {
+            flex: 1;
+            background-color: var(--light);
+            border-radius: 10px;
+            height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .problem-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .problem-list li {
+            padding: 15px 0 15px 40px;
+            position: relative;
+            border-bottom: 1px solid #eee;
+        }
+
+        .problem-list li:before {
+            content: '✖';
+            position: absolute;
+            left: 0;
+            top: 15px;
+            color: var(--danger);
+            font-size: 1.2rem;
+        }
+
+        /* Solution Section */
+        .solution {
+            background-color: var(--light);
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .profile-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .profile-body {
+            padding: 30px;
+            display: flex;
+            gap: 30px;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #8b5cf6, #0ea5e9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            flex-shrink: 0;
+        }
+
+        .profile-info h3 {
+            margin-bottom: 15px;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: var(--light);
+            border-radius: 10px;
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        /* Benefits Section */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .benefit-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            border-top: 4px solid var(--primary);
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .benefit-card h3 {
+            margin-bottom: 15px;
+        }
+
+        /* How it works */
+        .steps {
+            background: white;
+        }
+
+        .process-steps {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 30px 20px;
+            position: relative;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+
+        .step:not(:last-child):after {
+            content: '→';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: #ccc;
+        }
+
+        /* Testimonial */
+        .testimonial {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+        }
+
+        .testimonial-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .testimonial-content:before {
+            content: '"';
+            position: absolute;
+            top: -30px;
+            left: 30px;
+            font-size: 6rem;
+            color: rgba(255,255,255,0.2);
+            font-family: serif;
+        }
+
+        .client-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .client-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: white;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Offer Section */
+        .offer {
+            background-color: white;
+        }
+
+        .offer-container {
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            border-radius: 15px;
+            padding: 50px;
+            color: white;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .offer-container:before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .offer-container:after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -80px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .timer-item {
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            padding: 15px;
+            min-width: 80px;
+        }
+
+        .timer-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .bonuses {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 40px 0;
+        }
+
+        .bonus {
+            background: rgba(255,255,255,0.15);
+            border-radius: 10px;
+            padding: 20px;
+            width: 200px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Steps Section */
+        .steps-section {
+            background-color: var(--light);
+        }
+
+        .registration-steps {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .reg-step {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            flex: 1;
+            min-width: 250px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .reg-step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+
+        /* Final CTA */
+        .final-cta {
+            text-align: center;
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+        }
+
+        .final-cta h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .final-cta p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 1.2rem;
+        }
+
+        .assurances {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .assurance {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.15);
+            padding: 10px 20px;
+            border-radius: 30px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .contact-info h3, .footer-logo h3 {
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .contact-info h3:after, .footer-logo h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .problem-container {
+                flex-direction: column;
+            }
+
+            .profile-body {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .profile-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .step:not(:last-child):after {
+                content: '↓';
+                position: relative;
+                right: auto;
+                top: auto;
+                transform: none;
+                display: block;
+                margin: 20px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <div class="logo-img">SW</div>
+                <div class="logo-text">Siberian Wellness</div>
+            </div>
+            <a href="#cta" class="cta-button">Удвоить доход</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>🚀 УДВОЙТЕ ВАШ ДОХОД С ТЕКУЩЕЙ БАЗОЙ КЛИЕНТОВ!</h1>
+            <p>Без поиска новых клиентов - через лояльность и рекомендации</p>
+            <p>Откройте систему монетизации</p>
+            <a href="#cta" class="cta-button">Начать зарабатывать больше</a>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem" id="problem">
+        <div class="container">
+            <h2 class="section-title">Устали от бесконечной гонки за новыми клиентами?</h2>
+            <div class="problem-container">
+                <div class="problem-content">
+                    <p>Многие эксперты в сфере здоровья и красоты сталкиваются с одинаковыми трудностями:</p>
+                    <ul class="problem-list">
+                        <li>Постоянный поиск клиентов приводит к выгоранию</li>
+                        <li>80% времени тратится на привлечение, а не на обслуживание</li>
+                        <li>Не используются возможности лояльности существующих клиентов</li>
+                        <li>Доход нестабилен и зависит от постоянных усилий по привлечению</li>
+                        <li>Отсутствие системы, превращающей довольных клиентов в источник дохода</li>
+                    </ul>
+                </div>
+                <div class="problem-image">
+                    <i class="fas fa-tired"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution" id="solution">
+        <div class="container">
+            <h2 class="section-title">Решение, которое меняет правила игры</h2>
+            <div class="profile-card">
+                <div class="profile-header">
+                    <h2>Партнерская программа</h2>
+                    <p>Система монетизации лояльности</p>
+                </div>
+                <div class="profile-body">
+                    <div class="profile-img">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="profile-info">
+                        <h3>Наталья</h3>
+                        <p>Эта программа позволяет зарабатывать без вложений, без увеличения стоимости услуг и новых клиентов. Превращает вашу существующую клиентскую базу в источник стабильного роста дохода через выстраивания доверительных отношений. Создать поток рекомендаций без дополнительных вложений на основе реферальной системы и освободить время от постоянного поиска клиентов.</p>
+                        <div class="profile-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">5+</div>
+                                <div class="stat-label">лет опыта</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">200+</div>
+                                <div class="stat-label">партнеров</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">2x</div>
+                                <div class="stat-label">доход</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits" id="benefits">
+        <div class="container">
+            <h2 class="section-title">Ваши выгоды как партнера</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Бесплатное обучение</h3>
+                    <p>Полный пакет обучения стоимостью 500 000 рублей. Получите доступ к эксклюзивным материалам, вебинарам и методикам, которые помогут вам удвоить доход.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Поддержка команды</h3>
+                    <p>Ежедневная поддержка от нашей дружной команды экспертов. Никогда не останетесь один на один с вопросами или трудностями.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Стабильный доход</h3>
+                    <p>Предсказуемый доход от 50 000 рублей в месяц с возможностью постоянного роста. Больше никаких финансовых "качелей".</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                    <h3>Путешествия и признание</h3>
+                    <p>Возможность путешествовать за счет компании и получать признание за свои достижения. Постройте карьеру, которой будете гордиться.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>Система рекомендаций</h3>
+                    <p>Автоматические продажи 24/7 через систему рекомендаций. Ваши довольные клиенты будут приводить новых покупателей без вашего участия.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Личный наставник</h3>
+                    <p>Индивидуальный куратор для ускоренного старта и построения вашего плана роста. Персональный подход к вашему развитию.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="steps" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title">Как это работает</h2>
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Вы консультируете</h3>
+                    <p>Вы консультируете клиентов по продуктам Siberian Wellness, помогая им достичь целей в здоровье и красоте</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Клиент получает результат</h3>
+                    <p>Ваш клиент получает отличный результат от продукции и доволен вашей помощью</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Рекомендации друзьям</h3>
+                    <p>Довольный клиент рекомендует вас своим друзьям и знакомым</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Автоматический рост</h3>
+                    <p>Ваша база клиентов растет, а доход увеличивается без вашего активного участия</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="testimonial">
+        <div class="container">
+            <div class="testimonial-content">
+                <p>"Я врач-косметолог, рекомендую продукцию в своей клинике. Получив крутой результат, клиент возвращается снова и снова.</p>
+                <p>→ 65% новых клиентов приходят по рекомендациям</p>
+                <p>→ Дополнительно к основному доходу в мае я получила 51657 р</p>
+                <p>→ У меня освободилось 15+ часов в неделю для семьи и саморазвития!</p>
+                <p>Теперь я не ищу клиентов - они находят меня сами. Это невероятное ощущение свободы и стабильности!"</p>
+                <div class="client-info">
+                    <div class="client-avatar">MK</div>
+                    <div>
+                        <h4>Светлана Г.</h4>
+                        <p>Партнер Siberian Wellness с марта 2024</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offer Section -->
+    <section class="offer" id="offer">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Специальное предложение</h2>
+            <div class="offer-container">
+                <h3>Только до <span id="deadline">30 августа 2025</span> при регистрации:</h3>
+                <div class="timer" id="timer">
+                    <div class="timer-item">
+                        <div class="timer-value" id="days">14</div>
+                        <div>дней</div>
+                    </div>
+                    <div class="timer-item">
+                        <div class="timer-value" id="hours">08</div>
+                        <div>часов</div>
+                    </div>
+                    <div class="timer-item">
+                        <div class="timer-value" id="minutes">45</div>
+                        <div>минут</div>
+                    </div>
+                    <div class="timer-item">
+                        <div class="timer-value" id="seconds">30</div>
+                        <div>секунд</div>
+                    </div>
+                </div>
+                <div class="bonuses">
+                    <div class="bonus">
+                        <i class="fas fa-gift" style="font-size: 2rem; margin-bottom: 15px;"></i>
+                        <h4>Персональная сессия</h4>
+                        <p>Индивидуальный разбор вашей ситуации и план действий</p>
+                    </div>
+                    <div class="bonus">
+                        <i class="fas fa-file-alt" style="font-size: 2rem; margin-bottom: 15px;"></i>
+                        <h4>Чек-лист "5 шагов"</h4>
+                        <p>Готовый алгоритм для первых рекомендаций</p>
+                    </div>
+                    <div class="bonus">
+                        <i class="fas fa-video" style="font-size: 2rem; margin-bottom: 15px;"></i>
+                        <h4>Закрытый мастер-класс</h4>
+                        <p>Эксклюзивные стратегии монетизации лояльности</p>
+                    </div>
+                </div>
+                <a href="#cta" class="cta-button">Получить бонусы</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Steps Section -->
+    <section class="steps-section" id="steps">
+        <div class="container">
+            <h2 class="section-title">Начните за 4 простых шага</h2>
+            <div class="registration-steps">
+                <div class="reg-step">
+                    <div class="reg-step-number">1</div>
+                    <h3>Заявка</h3>
+                    <p>Нажмите кнопку "Стать партнером" и заполните короткую форму</p>
+                </div>
+                <div class="reg-step">
+                    <div class="reg-step-number">2</div>
+                    <h3>Регистрация</h3>
+                    <p>Завершите официальную регистрацию в Siberian Wellness</p>
+                </div>
+                <div class="reg-step">
+                    <div class="reg-step-number">3</div>
+                    <h3>Обучение</h3>
+                    <p>Получите доступ к обучению и личному куратору</p>
+                </div>
+                <div class="reg-step">
+                    <div class="reg-step-number">4</div>
+                    <h3>Результат</h3>
+                    <p>Запустите систему рекомендаций и получайте доход</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta" id="cta">
+        <div class="container">
+            <h2>Готовы запустить рост дохода без дополнительных усилий?</h2>
+            <p>Вы начнете зарабатывать на любимом деле уже в первый месяц! Ваши довольные клиенты станут лояльными.</p>
+            <a href="https://clck.ru/3NgnmV" class="cta-button">Стать партнером и удвоить доход</a>
+            <div class="assurances">
+                <div class="assurance">
+                    <i class="fas fa-lock"></i>
+                    <span>Гарантия конфиденциальности</span>
+                </div>
+                <div class="assurance">
+                    <i class="fas fa-clock"></i>
+                    <span>Регистрация займет 2 минуты</span>
+                </div>
+                <div class="assurance">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Персональный консультант</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Команда Натальи</h3>
+                    <p>Помогаем экспертам в сфере здоровья и красоты создавать устойчивый доход через монетизацию лояльности клиентов.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-vk"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="contact-info">
+                    <h3>Контакты</h3>
+                    <p><i class="fas fa-phone"></i> +7 (XXX) XXX-XX-XX</p>
+                    <p><i class="fab fa-telegram"></i> @nataha_bc</p>
+                    <p><i class="fas fa-envelope"></i> nataha-b.c@mail.ru</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2023 Команда Натальи Беляковой | Официальный партнер Siberian Wellness</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Timer countdown
+        function updateTimer() {
+            try {
+                // Установка дедлайна: 30 августа 2025, 23:59:59
+                const deadline = new Date(2025, 7, 30, 23, 59, 59).getTime();
+                const now = new Date().getTime();
+                const diff = deadline - now;
+
+                // Если время истекло
+                if (diff < 0) {
+                    document.getElementById('days').textContent = '00';
+                    document.getElementById('hours').textContent = '00';
+                    document.getElementById('minutes').textContent = '00';
+                    document.getElementById('seconds').textContent = '00';
+                    return;
+                }
+
+                // Расчет дней, часов, минут, секунд
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                // Обновление элементов таймера
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            } catch (e) {
+                console.error("Ошибка в таймере:", e);
+            }
+        }
+
+        // Плавная прокрутка для якорных ссылок
+        function initSmoothScrolling() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    
+                    // Пропускаем невалидные ссылки
+                    if (targetId === '#' || !targetId) return;
+                    
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Обновляем URL без перезагрузки страницы
+                        history.pushState(null, null, targetId);
+                    }
+                });
+            });
+        }
+
+        // Обработка начального хэша при загрузке
+        function handleInitialHash() {
+            if (window.location.hash) {
+                const target = document.querySelector(window.location.hash);
+                if (target) {
+                    setTimeout(() => {
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'auto'
+                        });
+                    }, 100);
+                }
+            }
+        }
+
+        // Инициализация после загрузки DOM
+        document.addEventListener('DOMContentLoaded', function() {
+            // Запуск таймера
+            updateTimer();
+            setInterval(updateTimer, 1000);
+            
+            // Инициализация плавной прокрутки
+            initSmoothScrolling();
+            
+            // Обработка начального хэша
+            handleInitialHash();
+        });
+    </script>
+</body>
+</html>
